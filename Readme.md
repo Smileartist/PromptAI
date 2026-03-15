@@ -1,6 +1,6 @@
-# PromptVault
+# PromptAI
 
-PromptVault is a small AI-powered productivity tool designed to help users **generate, organize, and manage AI prompts**.
+PromptAI is a small AI-powered productivity tool designed to help users **generate, organize, and manage AI prompts**.
 
 The application converts **simple user ideas into structured prompts**, automatically categorizes them using AI, and stores them in a searchable prompt library.
 
@@ -10,13 +10,10 @@ This project was built as a technical assessment to demonstrate **system design,
 
 # Live Deployment
 
-Frontend (Vercel)
-https://your-frontend-url.vercel.app
+Live App (Vercel)
+https://your-app-url.vercel.app
 
-Backend API (Render)
-https://your-backend-url.onrender.com
-
-Note: The backend may take ~30 seconds to wake up on the first request due to free-tier hosting.
+Note: The backend (API) is served from the same domain under `/api`.
 
 ---
 
@@ -29,12 +26,13 @@ Many developers, writers, and AI users frequently interact with large language m
 * organize prompts for reuse
 * quickly retrieve past prompts
 
-PromptVault solves these problems by providing:
+PromptAI solves these problems by providing:
 
 1. **AI-powered prompt generation**
 2. **automatic prompt categorization**
 3. **a searchable prompt library**
 4. **a structured prompt management interface**
+5. **secure user authentication**
 
 The system is intentionally designed to remain **small, understandable, and extensible**.
 
@@ -48,7 +46,7 @@ Users provide a simple idea such as:
 
 "create a prompt for react login form"
 
-The system converts it into a well-structured AI prompt using the **Gemini 2.5 Flash model**.
+The system converts it into a well-structured AI prompt using the **OpenAI gpt-4o-mini model**.
 
 Example output:
 
@@ -109,9 +107,9 @@ React Frontend
 ↓
 Flask REST API
 ↓
-PostgreSQL Database
+Firebase Firestore (NoSQL)
 ↓
-Gemini 2.5 Flash AI Model
+OpenAI gpt-4o-mini
 
 Responsibilities are clearly separated across system layers.
 
@@ -136,14 +134,13 @@ Python
 Flask API
 
 Database
-PostgreSQL (relational database)
+Firebase Firestore (NoSQL database)
 
 AI Integration
-Gemini 2.5 Flash model
+OpenAI gpt-4o-mini
 
 Infrastructure
-Frontend hosting: Vercel
-Backend hosting: Render
+Unified Hosting: Vercel (Frontend & Backend)
 
 ---
 
@@ -169,7 +166,7 @@ services
 Contains business logic including AI prompt generation and categorization.
 
 models
-Defines PostgreSQL database models.
+Defines Firestore data models.
 
 schemas
 Validates input and prevents invalid states.
@@ -214,7 +211,21 @@ Response
 "category": "Marketing"
 }
 
-The generated prompt is automatically stored in the database.
+The generated prompt is automatically stored in the database if the user is authenticated.
+
+---
+
+POST /auth/register
+
+Registers a new user (via Firebase Auth).
+
+---
+
+POST /auth/login
+
+Logs in an existing user and returns a JWT token.
+
+---
 
 ---
 
@@ -250,7 +261,7 @@ Response
 
 # AI Integration
 
-PromptVault integrates the **Gemini 2.5 Flash model** for two tasks:
+PromptAI integrates the **OpenAI gpt-4o-mini model** for two tasks:
 
 1. Prompt generation
 2. Prompt categorization
@@ -364,8 +375,6 @@ npm run dev
 
 Potential improvements include:
 
-* user authentication
-* cloud prompt syncing
 * prompt sharing
 * prompt version history
 * prompt optimization suggestions

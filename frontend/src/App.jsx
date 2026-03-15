@@ -76,43 +76,59 @@ function App() {
             <div className="absolute top-[40%] right-[-10%] w-[30%] h-[50%] rounded-full bg-purple-600/10 blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                <div className="hidden lg:flex justify-end mb-8 relative z-20 gap-3">
-                    {token ? (
-                        <button
-                            onClick={logout}
-                            className="flex items-center text-sm font-medium text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-2 rounded-xl transition-all"
-                        >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Log Out
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => setShowAuthModal(true)}
-                            className="flex items-center text-sm font-medium text-white hover:text-white bg-indigo-600/80 hover:bg-indigo-500 border border-indigo-500/30 px-4 py-2 rounded-xl transition-all shadow-lg shadow-indigo-500/20"
-                        >
-                            <UserIcon className="w-4 h-4 mr-2" />
-                            Sign In / Save Progress
-                        </button>
-                    )}
-                </div>
-
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-center mb-16"
+                    className="relative mb-12 mt-4"
                 >
-                    <div className="inline-flex items-center justify-center p-4 rounded-3xl bg-white/5 border border-white/10 shadow-2xl mb-6 ring-1 ring-white/20 ring-inset">
-                        <CircuitBoard className="w-12 h-12 text-indigo-400" />
+                    <div className="flex flex-col md:flex-row items-start justify-between gap-8">
+                        {/* Logo on the Left */}
+                        <div className="md:w-1/4 flex justify-start">
+                            <motion.div 
+                                whileHover={{ scale: 1.05, rotate: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="inline-flex items-center justify-center p-0.5 rounded-[32px] bg-gradient-to-br from-indigo-500 to-purple-600 shadow-2xl cursor-pointer overflow-hidden group"
+                            >
+                                <div className="bg-zinc-950 p-1 rounded-[30px] overflow-hidden">
+                                    <img src="/logo.png" alt="PromptAI Logo" className="w-32 h-32 object-cover rounded-[28px] transition-transform duration-300 group-hover:scale-110" />
+                                </div>
+                            </motion.div>
+                        </div>
+
+                        {/* Centered Title and Tagline */}
+                        <div className="md:w-2/4 text-center pt-4">
+                            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-100 to-indigo-400 drop-shadow-sm mb-4">
+                                PromptAI
+                            </h1>
+                            <p className="text-lg text-gray-400 font-medium opacity-90">
+                                {isGuest
+                                    ? "Offline Mode • Your ultimate prompt engineering hub"
+                                    : "Master your AI workflows with intelligent prompt management."}
+                            </p>
+                        </div>
+
+                        {/* Auth Button on the Right */}
+                        <div className="md:w-1/4 flex justify-end pt-4">
+                            {token ? (
+                                <button
+                                    onClick={logout}
+                                    className="flex items-center text-sm font-medium text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-2 rounded-xl transition-all"
+                                >
+                                    <LogOut className="w-4 h-4 mr-2" />
+                                    Log Out
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => setShowAuthModal(true)}
+                                    className="flex items-center text-sm font-medium text-white hover:text-white bg-indigo-600/80 hover:bg-indigo-500 border border-indigo-500/30 px-4 py-2 rounded-xl transition-all shadow-lg shadow-indigo-500/20"
+                                >
+                                    <UserIcon className="w-4 h-4 mr-2" />
+                                    Sign In / Save Progress
+                                </button>
+                            )}
+                        </div>
                     </div>
-                    <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-100 to-indigo-400 drop-shadow-sm">
-                        PromptVault
-                    </h1>
-                    <p className="mt-4 text-xl text-gray-400 max-w-2xl mx-auto font-medium">
-                        {isGuest
-                            ? "Currently in Offline Mode. Generated prompts are saved to this browser."
-                            : "The intelligent hub for generating, organizing, and executing your greatest AI workflows."}
-                    </p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-32 lg:pb-0">
