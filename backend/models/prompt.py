@@ -1,5 +1,6 @@
 from models.db import db
 from datetime import datetime
+from firebase_admin import firestore
 
 class Prompt:
     def __init__(self, user_id, user_input, generated_prompt, category):
@@ -36,12 +37,6 @@ class Prompt:
         prompts_ref = db.collection("prompts")
         query_ref = prompts_ref.where("user_id", "==", user_id).order_by("created_at", direction=firestore.Query.DESCENDING)
         
-        if query:
-            # This is a simplified search. For full-text search, consider a dedicated solution.
-            # Firebase doesn't support complex OR queries directly, so we might fetch and filter.
-            # For demonstration, we'll just return all if a query is present and filter in application.
-            pass # We will filter after fetching
-            
         docs = query_ref.stream()
         prompts = []
         for doc in docs:
@@ -62,4 +57,23 @@ class Prompt:
     @staticmethod
     def delete(prompt_id):
         db.collection("prompts").document(prompt_id).delete()
+        return True
+
+    @staticmethod
+    def delete_all_by_user(user_id):
+        prompts_ref = db.collection("prompts")
+        docs = prompts_ref.where("user_id", "==", user_id).stream()
+        
+        batch = db.batch()
+        count = 0
+        for doc in docs:
+            batch.delete(doc.reference)
+            count += 1
+            if count >= 500: # Firestore batch limit
+                batch.commit()
+                batch = db.batch()
+                count = 0
+        
+        if count > 0:
+            batch.commit()
         return True

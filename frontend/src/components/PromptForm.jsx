@@ -42,11 +42,11 @@ export default function PromptForm({ onPromptGenerated }) {
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
             <div className="relative z-10">
-                <h2 className="text-2xl font-semibold mb-2 flex items-center text-white">
+                <h2 className="text-xl md:text-2xl font-semibold mb-1 md:mb-2 flex items-center text-white">
                     <Sparkles className="w-5 h-5 mr-3 text-indigo-400" />
                     Generate Prompt
                 </h2>
-                <p className="text-sm text-gray-400 mb-6 font-medium">
+                <p className="text-xs md:text-sm text-gray-400 mb-4 md:mb-6 font-medium">
                     Transform your raw ideas into masterfully engineered AI instructions.
                 </p>
 

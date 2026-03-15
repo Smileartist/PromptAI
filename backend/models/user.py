@@ -47,3 +47,8 @@ class User:
             user.created_at = datetime.fromisoformat(data["created_at"]) if isinstance(data["created_at"], str) else data["created_at"]
             return user
         return None
+
+    @staticmethod
+    def delete(email):
+        db.collection("users").document(email).delete()
+        return True

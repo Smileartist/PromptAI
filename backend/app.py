@@ -14,6 +14,7 @@ from routes.health_routes import health_bp
 from routes.prompts_routes import prompts_bp
 from routes.generate_routes import generate_bp
 from routes.auth_routes import auth_bp
+from routes.delete_routes import delete_bp
 from flask_jwt_extended import JWTManager
 
 def create_app():
@@ -30,6 +31,7 @@ def create_app():
     app.register_blueprint(prompts_bp, url_prefix="/prompts")
     app.register_blueprint(generate_bp, url_prefix="/generate")
     app.register_blueprint(auth_bp, url_prefix="/auth")
+    app.register_blueprint(delete_bp, url_prefix="/delete")
 
     return app
 

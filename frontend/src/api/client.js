@@ -74,5 +74,34 @@ export const promptApi = {
         } catch (error) {
             throw error.response?.data || { message: 'Failed to delete prompt' };
         }
+    },
+
+    deleteAllData: async () => {
+        if (!localStorage.getItem('token')) {
+            localStorage.removeItem('offline_prompts');
+            return { status: 'success' };
+        }
+
+        try {
+            const response = await client.delete('/delete/all-data');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || { message: 'Failed to delete data' };
+        }
+    },
+
+    deleteAccount: async () => {
+        if (!localStorage.getItem('token')) {
+            // No account to delete in guest mode, just clear local data
+            localStorage.removeItem('offline_prompts');
+            return { status: 'success' };
+        }
+
+        try {
+            const response = await client.delete('/delete/account');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || { message: 'Failed to delete account' };
+        }
     }
 };
