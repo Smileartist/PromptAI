@@ -30,7 +30,8 @@ export const promptApi = {
             }
             return data;
         } catch (error) {
-            throw error.response?.data || { message: 'Failed to generate prompt' };
+            const message = error.response?.data?.message || error.message || 'Failed to generate prompt';
+            throw new Error(message);
         }
     },
 

@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 # Load env variables BEFORE importing routes that initialize services
-load_dotenv()
+load_dotenv(override=True)
 
 # Initialize Firebase Admin SDK before other imports
 from models.db import initialize_firebase

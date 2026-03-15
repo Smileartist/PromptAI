@@ -14,7 +14,7 @@ class AIService:
             self.client = openai.OpenAI(api_key=api_key)
 
         prompt_instruction = f"""
-You are a prompt engineering assistant. Convert a user's simple idea into a well-structured AI prompt and assign the most appropriate category.
+You are a prompt engineering assistant. Convert a user's simple idea into a well-structured and detailed AI prompt that can be given to any AI model to get the exact desired output and assign the most appropriate category.
 User's idea: "{idea}"
 Expected output format is strict JSON ONLY without markdown wrapping:
 {{

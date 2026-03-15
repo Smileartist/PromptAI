@@ -41,10 +41,12 @@ export default function PromptDetailModal({ prompt, isOpen, onClose }) {
                                 </div>
                                 <div>
                                     <h2 className="text-lg font-bold text-white">Prompt Details</h2>
-                                    <div className="flex items-center gap-2 text-xs text-zinc-500">
-                                        <Calendar className="w-3 h-3" />
-                                        {new Date(prompt.created_at).toLocaleString()}
-                                    </div>
+                                        {prompt.created_at && (
+                                            <div className="flex items-center gap-2 text-xs text-zinc-500">
+                                                <Calendar className="w-3 h-3" />
+                                                {new Date(prompt.created_at).toLocaleString()}
+                                            </div>
+                                        )}
                                 </div>
                             </div>
                             <button 

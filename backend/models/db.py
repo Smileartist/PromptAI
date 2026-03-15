@@ -13,7 +13,8 @@ def initialize_firebase():
                 # If it's a JSON string
                 cred_dict = json.loads(service_account_info)
                 cred = credentials.Certificate(cred_dict)
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, ValueError) as e:
+                print(f"DEBUG: JSON load failed: {str(e)}")
                 # If it's a path to a file
                 cred = credentials.Certificate(service_account_info)
         else:

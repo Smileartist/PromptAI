@@ -43,9 +43,9 @@ def generate_prompt():
                 "category": generated_content["category"]
             }}), 200
 
-    except ValueError as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
-    except RuntimeError as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+    except Exception as e:
+        import traceback
+        print(traceback.format_exc()) # Log it on Vercel
+        return jsonify({"status": "error", "message": f"Internal Error: {str(e)}"}), 500
 
 
