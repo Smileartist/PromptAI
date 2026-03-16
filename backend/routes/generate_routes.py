@@ -35,12 +35,15 @@ def generate_prompt():
                 }
             }), 200
         else:
-            # Guest user, return data without saving to DB
-            # Frontend will handle local storage for guest users
+            # Guest user, return data with temporary ID and timestamp to fix frontend keys/date
+            import uuid
+            from datetime import datetime
             return jsonify({"status": "success", "data": {
+                "id": str(uuid.uuid4()),
                 "user_input": idea,
                 "generated_prompt": generated_content["prompt"],
-                "category": generated_content["category"]
+                "category": generated_content["category"],
+                "created_at": datetime.utcnow().isoformat()
             }}), 200
 
     except Exception as e:
