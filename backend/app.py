@@ -7,8 +7,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 # Initialize Firebase Admin SDK before other imports
-from models.db import initialize_firebase
-db = initialize_firebase()
+from models.db import db
 
 from routes.health_routes import health_bp
 from routes.prompts_routes import prompts_bp
