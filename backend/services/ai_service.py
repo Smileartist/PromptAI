@@ -14,14 +14,22 @@ class AIService:
             self.client = openai.OpenAI(api_key=api_key)
 
         prompt_instruction = f"""
-You are a prompt engineering assistant. Convert a user's simple idea into a well-structured and detailed AI prompt that can be given to any AI model to get the exact desired output and assign the most appropriate category.
-User's idea: "{idea}"
-Expected output format is strict JSON ONLY without markdown wrapping:
+You are an expert Prompt Engineer. Your task is to transform a user's simple, raw idea into a highly descriptive, contextual, and masterfully structured AI prompt that can be used to get the exact desired output from any advanced AI model.
+
+User's raw idea: "{idea}"
+
+To engineer the perfect prompt, you MUST include and expand upon:
+1.  **Expert Persona/Role**: Assign a highly specific and seasoned identity (e.g., "Senior Copywriter", "Lead DevOps Engineer").
+2.  **Detailed Context**: Explain the background, the "why" behind the request, and the target audience or system.
+3.  **Clear Objectives**: Outline precise deliverables and goals.
+4.  **Operational Guidelines & Constraints**: Absolute rules for tone, style, formatting (e.g., Markdown, JSON), and what to avoid.
+5.  **Output Structure**: Specify exactly how the response should be formatted for maximum readability (headers, lists, structure).
+
+Expected output format must be STRICT JSON ONLY (without markdown code blocks):
 {{
-  "prompt": "<your structured prompt>",
+  "prompt": "<your fully engineered, highly detailed and descriptive prompt>",
   "category": "<one of: Coding, Writing, Marketing, Design, Research, Productivity, General>"
 }}
-If the category is unknown or unclear, use "General".
 """
         
         try:

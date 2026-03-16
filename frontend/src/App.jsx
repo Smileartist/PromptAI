@@ -17,6 +17,8 @@ function App() {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
+    const [latestGeneratedPrompt, setLatestGeneratedPrompt] = useState(null);
+
     const fetchPrompts = useCallback(async (query = '') => {
         setLoading(true);
         try {
@@ -50,6 +52,7 @@ function App() {
     }, [searchQuery, fetchPrompts]);
 
     const handlePromptGenerated = (newPrompt) => {
+        setLatestGeneratedPrompt(newPrompt);
         setPrompts((prev) => [newPrompt, ...prev]);
     };
 
@@ -183,8 +186,48 @@ function App() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className={`lg:col-span-4 ${activeTab === 'generate' ? 'block' : 'hidden lg:block'}`}
                     >
-                        <div className="sticky top-8">
+                        <div className="sticky top-8 space-y-6">
                             <PromptForm onPromptGenerated={handlePromptGenerated} />
+                            
+                            <AnimatePresence>
+                                {latestGeneratedPrompt && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ duration: 0.4 }}
+                                        className="glass-panel p-6 rounded-2xl border border-indigo-500/30 relative overflow-hidden bg-gradient-to-br from-indigo-500/5 to-purple-500/5"
+                                    >
+                                        <div className="absolute top-0 right-0 px-3 py-1 bg-indigo-500/20 rounded-bl-xl text-[10px] font-black uppercase text-indigo-300 tracking-wider">
+                                            Latest Result
+                                        </div>
+                                        
+                                        <div className="mb-3">
+                                            <span className="text-[10px] font-black tracking-widest text-indigo-400 uppercase bg-indigo-500/10 px-2.5 py-1 rounded-md border border-indigo-500/20">
+                                                {latestGeneratedPrompt.category}
+                                            </span>
+                                        </div>
+                                        
+                                        <h3 className="text-sm font-bold text-white mb-2">Engineered Prompt:</h3>
+                                        <div className="bg-white/5 border border-white/10 rounded-xl p-4 max-h-[300px] overflow-y-auto mb-4">
+                                            <p className="text-xs md:text-sm text-zinc-300 whitespace-pre-wrap leading-relaxed">
+                                                {latestGeneratedPrompt.generated_prompt}
+                                            </p>
+                                        </div>
+
+                                        <button 
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(latestGeneratedPrompt.generated_prompt);
+                                                alert('Prompt copied to clipboard!');
+                                            }}
+                                            className="w-full flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl border border-indigo-500/30 transition-all shadow-lg shadow-indigo-500/20"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                                            Copy to Clipboard
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </motion.div>
 
